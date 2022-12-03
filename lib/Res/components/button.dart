@@ -6,13 +6,17 @@ class textButton extends StatelessWidget {
       required this.text,
       this.backgroundcolor,
       this.height,
-      this.width, this.textcolor, this.onPressed});
+      this.width,
+      this.textcolor,
+      this.onPressed,
+      this.fontsize});
   final String text;
   final Color? backgroundcolor;
   final double? height;
   final double? width;
   final Color? textcolor;
   final GestureTapCallback? onPressed;
+  final double? fontsize;
 
   @override
   Widget build(BuildContext context) {

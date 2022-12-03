@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:ghmc_officer/Res/components/sharedpreference.dart';
 import 'package:ghmc_officer/Res/components/textwidget.dart';
 import 'package:ghmc_officer/Res/constants/routes/app_routes.dart';
 import 'package:ghmc_officer/View/GhmcDashboard.dart';
-
 
 class MyMpinDesign extends StatefulWidget {
   const MyMpinDesign({super.key});
@@ -58,7 +58,7 @@ class _MyMpinDesignState extends State<MyMpinDesign> {
             child: Card(
               elevation: 15.0,
               margin:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 150.0),
+                  const EdgeInsets.symmetric(vertical: 150.0),
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Colors.black87, width: 1),
@@ -69,26 +69,41 @@ class _MyMpinDesignState extends State<MyMpinDesign> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _textFieldOTP(first: true, last: false),
-                        _textFieldOTP(first: false, last: false),
-                        _textFieldOTP(first: false, last: false),
-                        _textFieldOTP(first: false, last: true),
-                      ],
+                    PinCodeFields(
+                      length: 4,
+                      fieldBorderStyle: FieldBorderStyle.square,
+                      responsive: false,
+                      fieldHeight: 50.0,
+                      fieldWidth: 50.0,
+                      borderWidth: 1.0,
+                      activeBorderColor: Colors.black,
+                      activeBackgroundColor: Colors.transparent,
+                      borderRadius: BorderRadius.circular(10.0),
+                      keyboardType: TextInputType.number,
+                      autoHideKeyboard: false,
+                      fieldBackgroundColor: Colors.black12,
+                      borderColor: Colors.black38,
+                      textStyle: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      onComplete: (output) {
+                        mpinValue = output;
+
+                        // Your logic with pin code
+                        // print(output);
+                      },
                     ),
+                    
 
                     //login button
                     ElevatedButton(
                       onPressed: () async {
                         var res =
                             await SharedPreferencesClass().readTheData("mpin");
-                        
-                        /*  var name=
-                            await SharedPreferencesClass().readTheData("ename"); */
-                        print("result is ${res}");
-                        print(mpinValue);
+
+                        print("read mpin from  sahredpref in login is  ${res}");
+                        print("user enterd value in login screen ${mpinValue}");
                         if (res == mpinValue) {
                           Navigator.pushNamed(context, AppRoutes.ghmcdashboard);
                         } else {
@@ -98,7 +113,7 @@ class _MyMpinDesignState extends State<MyMpinDesign> {
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 5.0,
-                        backgroundColor: Colors.black,
+                        backgroundColor: Color.fromARGB(255, 173, 48, 90),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -132,45 +147,6 @@ class _MyMpinDesignState extends State<MyMpinDesign> {
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _textFieldOTP({bool? first, last}) {
-    return SizedBox(
-      height: 84,
-      child: AspectRatio(
-        aspectRatio: 0.7,
-        child: TextField(
-          autofocus: true,
-          onChanged: (value) {
-            //otpValue.add(value);
-            mpinValue += value.toString();
-            if (value.length == 1 && last == false) {
-              FocusScope.of(context).nextFocus();
-            }
-            if (value.isEmpty && first == false) {
-              FocusScope.of(context).previousFocus();
-            }
-          },
-          showCursor: false,
-          readOnly: false,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold,
-          color: Colors.white),
-          keyboardType: TextInputType.number,
-          maxLength: 1,
-          decoration: InputDecoration(
-            counter: const Offstage(),
-            enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(width: 2, color: Colors.white),
-                borderRadius: BorderRadius.circular(10)),
-            focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(width: 2, color: Colors.greenAccent),
-                borderRadius: BorderRadius.circular(10)),
           ),
         ),
       ),

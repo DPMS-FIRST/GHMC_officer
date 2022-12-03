@@ -106,7 +106,9 @@ class _MyTotalGrievances extends State<MyTotalGrievances> {
                   screenHeight: 0.08, 
                   searchIcon: Icon(Icons.search), 
                   topPadding: 20.0, 
-                  onPressed: () {  }, 
+                  onPressed: () { 
+                    
+                   }, 
                   screenWidth: 1,),
                 Padding(
                   padding: const EdgeInsets.only(top: 70.0),

@@ -6,7 +6,6 @@ import 'package:ghmc_officer/Res/components/textwidget.dart';
 import 'package:ghmc_officer/Res/constants/ApiConstants/api_constants.dart';
 import 'package:ghmc_officer/Res/constants/routes/app_routes.dart';
 
-
 class LoginShared extends StatefulWidget {
   const LoginShared({super.key});
 
@@ -20,7 +19,7 @@ class _LoginSharedState extends State<LoginShared> {
   FocusNode myFocusNode = new FocusNode();
   bool _isLoading = false;
   ghmc_login? ResponseData;
-  String otpValue = '';
+  String? otpValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -146,18 +145,15 @@ class _LoginSharedState extends State<LoginShared> {
 
   @override
   void initState() {
-  
     super.initState();
     myFocusNode.addListener(() {
       setState(() {});
     });
-   readsharedprefData();
+    
   }
 
   void fetchLoginDetailsFromApi() async {
-    
-    final requestUrl =
-        ApiConstants.login_baseurl + ApiConstants.login_endpoint;
+    final requestUrl = ApiConstants.login_baseurl + ApiConstants.login_endpoint;
 
     final _dioObject = Dio();
 
@@ -171,15 +167,16 @@ class _LoginSharedState extends State<LoginShared> {
       if (_response.data != null) {
         setState(() {
           this.ResponseData = data;
+          print(_response.data);
         });
-        print(_response.data);
+
         // print(ResponseData.status);
 
         if (ResponseData?.status == 'M') {
           SharedPreferencesClass()
               .writeTheData("mobileNumber", ResponseData?.mOBILENO);
           SharedPreferencesClass().writeTheData("mpin", ResponseData?.mpin);
-
+          //SharedPreferencesClass().writeTheData("otp", ResponseData?.otp);
           SharedPreferencesClass()
               .writeTheData("category", ResponseData?.cATEGORY);
           SharedPreferencesClass()
@@ -193,8 +190,8 @@ class _LoginSharedState extends State<LoginShared> {
           SharedPreferencesClass()
               .writeTheData("tokenId", ResponseData?.tOKENID);
           SharedPreferencesClass().writeTheData("typeId", ResponseData?.tYPEID);
-
-        Navigator.pushNamed(context, AppRoutes.mpin);
+         
+          Navigator.pushNamed(context, AppRoutes.mpin);
         } else if (ResponseData?.status == 'O') {
           SharedPreferencesClass()
               .writeTheData("mobileNumber", ResponseData?.mOBILENO);
@@ -213,12 +210,13 @@ class _LoginSharedState extends State<LoginShared> {
           SharedPreferencesClass()
               .writeTheData("tokenId", ResponseData?.tOKENID);
           SharedPreferencesClass().writeTheData("typeId", ResponseData?.tYPEID);
-          
-
-          Navigator.pushNamed(context, AppRoutes.otpscreen);
+           readsharedprefData();
+         Navigator.pushNamed(context, AppRoutes.otpscreen);
         } else if (ResponseData?.status == 'N') {
           showAlert(ResponseData!.message.toString());
         }
+      } else {
+        print("data is null");
       }
     } on DioError catch (e) {
       if (e.response?.statusCode == 400 ||
@@ -256,7 +254,7 @@ class _LoginSharedState extends State<LoginShared> {
         }); //showDialog
   } //
 
-  readsharedprefData() async {
+ Future<dynamic> readsharedprefData() async {
     final otp = await SharedPreferencesClass().readTheData("otp");
 
     //print("otp value from sharedpre is $otp");
@@ -264,5 +262,6 @@ class _LoginSharedState extends State<LoginShared> {
     setState(() {
       otpValue = otp;
     });
+    print(otpValue);
   }
 }

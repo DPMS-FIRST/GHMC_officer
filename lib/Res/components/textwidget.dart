@@ -12,7 +12,8 @@ class TextWidget extends StatelessWidget {
     required this.top,
     required this.bottom,
      this.textcolor,
-    this.fontsize,
+    this.fontsize, this.fontWeight,
+
 
   });
   final String text;
@@ -22,6 +23,8 @@ class TextWidget extends StatelessWidget {
   final double bottom;
   final Color? textcolor;
   final double? fontsize;
+  final FontWeight? fontWeight;
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +36,8 @@ class TextWidget extends StatelessWidget {
           style: TextStyle(
             color: textcolor,
             fontSize: fontsize,
+           
+            fontWeight:fontWeight ,
             decoration: TextDecoration.none,
 
           ),

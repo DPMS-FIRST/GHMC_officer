@@ -5,7 +5,7 @@ import 'package:ghmc_officer/Model/shared_model.dart';
 
 import 'package:ghmc_officer/Res/components/background_image.dart';
 import 'package:ghmc_officer/Res/components/button.dart';
-import 'package:ghmc_officer/Res/components/service_text.dart';
+
 import 'package:ghmc_officer/Res/components/sharedpreference.dart';
 
 import 'package:ghmc_officer/Res/constants/ApiConstants/api_constants.dart';
@@ -121,7 +121,7 @@ class _GrievanceHistoryState extends State<GrievanceHistory> {
                       text: "TAKE ACTION",
                       textcolor: Colors.white,
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.takeaction);
+                       // Navigator.pushNamed(context, AppRoutes.takeaction);
                       },
                     ),
                   ),

@@ -16,7 +16,7 @@ class FullGrievanceDetails extends StatefulWidget {
 
 class _FullGrievanceDetailsState extends State<FullGrievanceDetails> {
   GrievanceFullDetails? grievanceFullDetails;
-  String? _backgroundImage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

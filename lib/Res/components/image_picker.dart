@@ -33,9 +33,9 @@ class _ImagePickerState extends State<ImgPicker> {
        Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-            CustomButton(
+          /*   CustomButton(
                 ico: Icons.image_outlined,
-                onclick: (() => getImage(ImageSource.gallery))),
+                onclick: (() => getImage(ImageSource.gallery))), */
             CustomButton(
                 ico: Icons.camera_alt_rounded,
                 onclick: (() => getImage(ImageSource.camera))),
@@ -64,16 +64,27 @@ Widget CustomButton(
     {
       
     required IconData ico,
-    required VoidCallback onclick}) {
+    required VoidCallback onclick,Color? iconColor}) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-       width: 60,
-      child: ElevatedButton(
-        onPressed: onclick,
-        child: Row(
-          children: [Icon(ico)],
-        ),
+    padding: const EdgeInsets.symmetric(vertical: 20.0),
+    child: Center(
+      child: Container(
+         width: 60,
+         height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(70),
+            color: Colors.blue,
+           
+            ),
+        child: IconButton(icon:Icon(ico) , onPressed:onclick,
+        color: iconColor,),
+       
+       /*  child: ElevatedButton(
+          onPressed: onclick,
+          child: Row(
+            children: [Icon(ico)],
+          ),
+        ), */
       ),
     ),
   );
